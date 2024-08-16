@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "videoverse_backend"
 version = "0.1.0"
-description = ""
+description = "A robust REST API for video file management, supporting upload, trimming, merging, and secure sharing. Built with Python, FastAPI, and AWS S3, featuring configurable limits and time-based expiring links."
 authors = [
     "Vetrichelvan <pythonhubdev@gmail.com>"
 ]

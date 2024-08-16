@@ -1,6 +1,7 @@
-# videoverse_backend
+# Videoverse Backend
 
-This is a backend part of the Videoverse project.
+A robust REST API for video file management, supporting upload, trimming, merging, and secure sharing. Built with
+Python, FastAPI, and AWS S3, featuring configurable limits and time-based expiring links.
 
 ## Poetry
 
