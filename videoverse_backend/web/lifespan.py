@@ -4,7 +4,7 @@ from typing import AsyncIterator
 from fastapi import FastAPI
 
 from videoverse_backend.db import database
-from videoverse_backend.db.base import BaseModel
+from videoverse_backend.db.models.base import BaseModel
 
 
 @asynccontextmanager

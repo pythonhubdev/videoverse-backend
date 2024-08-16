@@ -1,7 +1,6 @@
 from granian import Granian
 from granian.constants import Interfaces
 
-from videoverse_backend.core import configure_logging
 from videoverse_backend.settings import settings
 
 

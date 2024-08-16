@@ -22,5 +22,4 @@ SKIP_URLS = [
 	"/api/redoc",
 	"/api/auth",
 	"/api/auth/login",
-	"/api/auth/verify-email",
 ]

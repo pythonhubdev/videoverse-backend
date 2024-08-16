@@ -4,7 +4,6 @@ from videoverse_backend.core import DEFAULT_ROUTE_OPTIONS, CommonResponseSchema,
 
 router = APIRouter()
 
-
 health_router = APIRouter(tags=["Monitoring", "Health"])
 
 
