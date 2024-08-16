@@ -6,7 +6,8 @@ from fastapi.responses import ORJSONResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware.cors import CORSMiddleware
 
-from videoverse_backend.core import configure_logging
+from videoverse_backend.core import DEFAULT_ROUTE_OPTIONS, CommonResponseSchema, StatusEnum, configure_logging
+from videoverse_backend.settings import settings
 from videoverse_backend.web.api.router import api_router
 from videoverse_backend.web.lifespan import lifespan
 
@@ -21,7 +22,6 @@ def get_app() -> FastAPI:
 
 	:return: application.
 	"""
-	configure_logging()
 	app = FastAPI(
 		title="Videoverse Backend",
 		version=metadata.version("videoverse_backend"),
@@ -44,4 +44,18 @@ def get_app() -> FastAPI:
 
 	app.mount("/static", StaticFiles(directory=APP_ROOT / "static"), name="static")
 
+	@app.get("/", tags=["Root"], **DEFAULT_ROUTE_OPTIONS)
+	def read_root() -> CommonResponseSchema:
+		return CommonResponseSchema(
+			status=StatusEnum.SUCCESS,
+			message="Welcome to Videoverse Fusion Backend!!",
+			data={
+				"ping": "pong",
+			},
+		)
+
+	configure_logging()
 	return app
+
+
+videoverse_app = get_app()

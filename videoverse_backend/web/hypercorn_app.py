@@ -20,7 +20,6 @@ class HypercornApplication:
 		app: FastAPI,
 	) -> None:
 		self.app = app
-		configure_logging()
 
 	def run(self) -> None:
 		"""

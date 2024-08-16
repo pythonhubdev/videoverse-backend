@@ -73,6 +73,20 @@ def configure_logging() -> None:
 	hypercorn_error_logger.handlers = [intercept_handler]
 	hypercorn_error_logger.propagate = False
 
+	for logger_name in logging.root.manager.loggerDict:
+		if logger_name.startswith("granian."):
+			logging.getLogger(logger_name).handlers = []
+	granian_internal_logger = logging.getLogger("_granian.asgi.serve")
+	granian_internal_logger.setLevel(logging.CRITICAL)
+	granian_access_logger = logging.getLogger("_granian")
+	granian_access_logger.setLevel(logging.CRITICAL)
+	granian_access_logger.handlers = [intercept_handler]
+	granian_access_logger.propagate = False
+
+	granian_access_logger = logging.getLogger("granian.access")
+	granian_access_logger.handlers = [intercept_handler]
+	granian_access_logger.propagate = False
+
 	logger.configure(
 		handlers=[
 			{
@@ -84,6 +98,6 @@ def configure_logging() -> None:
 	)
 
 
-logger = logger.bind(name="ProductFusion")
+logger = logger.bind(name="Videoverse")
 stage_logger = logger.bind(stage="STAGE")
 end_stage_logger = logger.bind(stage="END STAGE")

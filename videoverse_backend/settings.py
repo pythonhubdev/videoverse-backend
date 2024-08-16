@@ -2,6 +2,8 @@ import enum
 import os
 from functools import lru_cache
 
+from dotenv import load_dotenv
+
 
 class LogLevel(str, enum.Enum):
 	"""Possible log levels."""
@@ -30,16 +32,21 @@ class Settings:
 	with environment variables.
 	"""
 
-	HOST: str = os.getenv("HOST", "0.0.0.0")
-	PORT: int = int(os.getenv("PORT", 8000))
-	WORKERS_COUNT: int = int(os.getenv("WORKERS_COUNT", 1))
-	DEBUG: bool = os.getenv("DEBUG", "False").lower() == "true"
+	def __init__(self) -> None:
+		load_dotenv(".env")
 
-	ENVIRONMENT: Environment = Environment[os.getenv("ENVIRONMENT", "DEV")]
+		self.HOST: str = os.getenv("HOST", "0.0.0.0")
+		self.PORT: int = int(os.getenv("PORT", 8000))
+		self.WORKERS_COUNT: int = int(os.getenv("WORKERS_COUNT", 1))
+		self.DEBUG: bool = os.getenv("DEBUG", "False").lower() == "true"
 
-	LOG_LEVEL: LogLevel = LogLevel.INFO
+		self.ENVIRONMENT: Environment = Environment[os.getenv("ENVIRONMENT", "DEV")]
 
-	DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite+aiosqlite:///./videoverse.db")
+		self.LOG_LEVEL: LogLevel = LogLevel.INFO
+
+		self.DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite+aiosqlite:///./videoverse.db")
+
+		self.USE_UVICORN: bool = os.getenv("USE_UVICORN", "False").lower() == "true"
 
 
 @lru_cache

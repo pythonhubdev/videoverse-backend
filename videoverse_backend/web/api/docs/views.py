@@ -6,10 +6,10 @@ from fastapi.openapi.docs import (
 )
 from fastapi.responses import HTMLResponse
 
-router = APIRouter()
+docs_router = APIRouter()
 
 
-@router.get("/docs", include_in_schema=False)
+@docs_router.get("/docs", include_in_schema=False)
 async def swagger_ui_html(request: Request) -> HTMLResponse:
 	"""
 	Swagger UI.
@@ -27,7 +27,7 @@ async def swagger_ui_html(request: Request) -> HTMLResponse:
 	)
 
 
-@router.get("/swagger-redirect", include_in_schema=False)
+@docs_router.get("/swagger-redirect", include_in_schema=False)
 async def swagger_ui_redirect() -> HTMLResponse:
 	"""
 	Redirect to swagger.
@@ -37,7 +37,7 @@ async def swagger_ui_redirect() -> HTMLResponse:
 	return get_swagger_ui_oauth2_redirect_html()
 
 
-@router.get("/redoc", include_in_schema=False)
+@docs_router.get("/redoc", include_in_schema=False)
 async def redoc_html(request: Request) -> HTMLResponse:
 	"""
 	Redoc UI.

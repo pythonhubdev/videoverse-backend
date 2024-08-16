@@ -27,6 +27,7 @@ httptools = "^0.6.1"
 orjson = "^3.10.7"
 loguru = "^0.7.2"
 hypercorn = "^0.17.3"
+granian = "^1.5.2"
 
 
 [tool.poetry.group.dev.dependencies]

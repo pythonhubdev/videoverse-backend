@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+    api:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: videoverse_backend:${VIDEOVERSE_BACKEND_VERSION:-latest}
+        restart: always
+        env_file:
+        -   .env
+        environment:
+            HOST: 0.0.0.0
+            DATABASE_URL: sqlite+aiosqlite:///db_data/db.sqlite3
+        volumes:
+        -   videoverse_backend-db-data:/db_data/
+        ports:
+        -   "8000:8000"
+
+    migrator:
+        image: videoverse_backend:${VIDEOVERSE_BACKEND_VERSION:-latest}
+        restart: "no"
+        command: alembic upgrade head
+        environment:
+            DATABASE_URL: sqlite+aiosqlite:///db_data/db.sqlite3
+        volumes:
+        -   videoverse_backend-db-data:/db_data/
+
+volumes:
+    videoverse_backend-db-data:
+        name: videoverse_backend-db-data
