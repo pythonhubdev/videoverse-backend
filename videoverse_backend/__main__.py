@@ -6,7 +6,7 @@ from videoverse_backend.web.hypercorn_app import HypercornApplication
 
 def main() -> None:
 	"""Entrypoint of the application."""
-	if settings.USE_UVICORN:
+	if settings.USE_HYPERCORN:
 		app = get_app()
 		hypercorn_app = HypercornApplication(app)
 		hypercorn_app.run()

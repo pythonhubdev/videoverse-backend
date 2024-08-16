@@ -46,7 +46,7 @@ class Settings:
 
 		self.DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite+aiosqlite:///./videoverse.db")
 
-		self.USE_UVICORN: bool = os.getenv("USE_UVICORN", "False").lower() == "true"
+		self.USE_HYPERCORN: bool = os.getenv("USE_HYPERCORN", "False").lower() == "true"
 
 
 @lru_cache

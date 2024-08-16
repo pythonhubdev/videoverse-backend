@@ -1,14 +1,15 @@
-version: "3.8"
 services:
     api:
-        ports:
-        -   "8000:8000"
         build:
-            context: .
+            target: dev
+            context: ..
             dockerfile: Dockerfile
         volumes:
-        -   .:/app
+        -   ..:/app:delegated
         environment:
-            RELOAD: "True"
             DEBUG: "True"
-        command: hypercorn videoverse_backend.web.application:app --bind "0.0.0.0:8000" --reload
+            ENV: "DEV"
+            PYTHONPATH: /app
+        command: python -m videoverse_backend
+        ports:
+        -   "8000:8000"

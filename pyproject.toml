@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "videoverse_backend"
+name = "videoverse-backend"
 version = "0.1.0"
 description = "A robust REST API for video file management, supporting upload, trimming, merging, and secure sharing. Built with Python, FastAPI, and AWS S3, featuring configurable limits and time-based expiring links."
 authors = [
@@ -18,7 +18,6 @@ python = "^3.12"
 fastapi = "^0.112.1"
 uvicorn = { version = "^0.30.1", extras = ["standard"] }
 pydantic = "^2"
-pydantic-settings = "^2"
 SQLAlchemy = { version = "^2.0.31", extras = ["asyncio"] }
 alembic = "^1.13.2"
 aiosqlite = "^0.20.0"
