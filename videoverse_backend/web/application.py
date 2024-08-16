@@ -7,7 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from starlette.middleware.cors import CORSMiddleware
 
 from videoverse_backend.core import DEFAULT_ROUTE_OPTIONS, CommonResponseSchema, StatusEnum, configure_logging
-from videoverse_backend.settings import settings
+from videoverse_backend.middlewares.logging_middleware import LoggingMiddleware
 from videoverse_backend.web.api.router import api_router
 from videoverse_backend.web.lifespan import lifespan
 
@@ -39,6 +39,8 @@ def get_app() -> FastAPI:
 		allow_methods=["*"],
 		allow_headers=["*"],
 	)
+
+	app.add_middleware(LoggingMiddleware)  # type: ignore
 
 	app.include_router(router=api_router, prefix="/api")
 
