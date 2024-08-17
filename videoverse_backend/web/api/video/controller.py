@@ -265,7 +265,7 @@ class VideoController:
 			download_tasks.append(download_video(video))
 
 		input_files = await asyncio.gather(*download_tasks)
-		return input_files
+		return input_files  # type: ignore
 
 	@staticmethod
 	async def _merge_videos_ffmpeg(input_files: list[str], output_filename: str, temp_dir: str) -> tuple[str, str]:
