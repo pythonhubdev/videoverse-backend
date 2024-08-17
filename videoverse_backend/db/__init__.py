@@ -3,6 +3,7 @@ from typing import Any, AsyncGenerator, Awaitable, Callable, TypeVar, cast
 
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
+from videoverse_backend.db.models.video_model import VideoModel
 from videoverse_backend.settings import settings
 
 F = TypeVar("F", bound=Callable[..., Awaitable[Any]])
@@ -48,4 +49,8 @@ def inject_session(func: F) -> F:
 	return cast(F, wrapper)
 
 
-__all__ = ["database", "inject_session"]
+__all__ = [
+	"database",
+	"inject_session",
+	"VideoModel",
+]

@@ -5,8 +5,8 @@ from alembic import context
 from sqlalchemy.ext.asyncio.engine import create_async_engine
 from sqlalchemy.future import Connection
 
-from videoverse_backend.db.base import meta
 from videoverse_backend.db.models import load_all_models
+from videoverse_backend.db.models.base import BaseModel
 from videoverse_backend.settings import settings
 
 config = context.config
@@ -16,7 +16,7 @@ load_all_models()
 if config.config_file_name is not None:
 	fileConfig(config.config_file_name)
 
-target_metadata = meta
+target_metadata = BaseModel.metadata
 
 config.set_main_option("sqlalchemy.url", str(settings.DATABASE_URL))
 

@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, Optional
+from typing import Any
 
 from pydantic import BaseModel, ConfigDict
 from starlette import status
@@ -11,7 +11,7 @@ from videoverse_backend.core.utils.enums import StatusEnum
 class CommonResponseSchema(BaseModel):
 	status: StatusEnum
 	message: str
-	data: Optional[dict[Any, Any] | list[dict[Any, Any]]] = None
+	data: dict[Any, Any] | list[dict[Any, Any]] | None = None
 	model_config = ConfigDict(
 		json_encoders={
 			datetime: lambda v: v.isoformat(),
@@ -31,7 +31,7 @@ class APIResponse(JSONResponse):
 		self,
 		status_: StatusEnum,
 		message: str,
-		data: Optional[dict[str, Any] | list[dict[str, Any]]] = None,
+		data: dict[str, Any] | list[dict[str, Any]] | None = None,
 		status_code: int = status.HTTP_200_OK,
 	):
 		content = CommonResponseSchema(status=status_, message=message, data=data).model_dump(exclude_none=True)

@@ -1,6 +1,7 @@
 import enum
 import os
 from functools import lru_cache
+from typing import Any
 
 from dotenv import load_dotenv
 
@@ -47,6 +48,14 @@ class Settings:
 		self.DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite+aiosqlite:///./videoverse.db")
 
 		self.USE_HYPERCORN: bool = os.getenv("USE_HYPERCORN", "False").lower() == "true"
+
+		self.MAX_FILE_SIZE = int(os.getenv("MAX_FILE_SIZE", 25))
+		self.MIN_DURATION = int(os.getenv("MIN_DURATION", 5))
+		self.MAX_DURATION = int(os.getenv("MAX_DURATION", 300))
+		self.EXPIRATION_TIME = int(os.getenv("EXPIRATION_TIME", 60))
+
+	def __getitem__(self, key: str) -> Any:
+		return getattr(self, key)
 
 
 @lru_cache

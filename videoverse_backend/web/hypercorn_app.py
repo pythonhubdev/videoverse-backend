@@ -4,7 +4,6 @@ from fastapi import FastAPI
 from hypercorn.asyncio import serve
 from loguru import logger
 
-from videoverse_backend.core import configure_logging
 from videoverse_backend.server_config import HypercornConfig
 
 
