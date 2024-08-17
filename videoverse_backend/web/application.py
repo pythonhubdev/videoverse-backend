@@ -6,8 +6,8 @@ from fastapi.responses import ORJSONResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware.cors import CORSMiddleware
 
-from videoverse_backend.core import DEFAULT_ROUTE_OPTIONS, TOKENS, CommonResponseSchema, StatusEnum
-from videoverse_backend.middlewares import StaticAPITokenMiddleware
+from videoverse_backend.core import DEFAULT_ROUTE_OPTIONS, TOKENS, CommonResponseSchema, StatusEnum, configure_logging
+from videoverse_backend.middlewares import LoggingMiddleware, StaticAPITokenMiddleware
 from videoverse_backend.web.api.router import api_router
 from videoverse_backend.web.lifespan import lifespan
 
@@ -45,7 +45,7 @@ def get_app() -> FastAPI:
 		api_tokens=TOKENS,
 	)  # type: ignore
 
-	# app.add_middleware(LoggingMiddleware)  # type: ignore
+	app.add_middleware(LoggingMiddleware)  # type: ignore
 
 	app.include_router(router=api_router, prefix="/api")
 
@@ -61,7 +61,7 @@ def get_app() -> FastAPI:
 			},
 		)
 
-	# configure_logging()
+	configure_logging()
 	return app
 
 

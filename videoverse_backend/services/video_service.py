@@ -38,8 +38,6 @@ class VideoService:
 			preexec_fn=os.setsid,
 		)
 		stdout, stderr = process.communicate()
-		print(f"Stdout: {stdout}")
-		print(f"Stderr: {stderr}")
 
 	@staticmethod
 	def merge_videos(list_file_path: str, output_path: str) -> None:
