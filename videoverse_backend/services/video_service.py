@@ -1,6 +1,6 @@
 import json
+import os
 import subprocess
-from os import PathLike
 from typing import Any
 
 from videoverse_backend.settings import settings
@@ -20,20 +20,39 @@ class VideoService:
 
 	@staticmethod
 	def trim_video(file_path: str, start_time: float | None, end_time: float | None, output_path: str) -> None:
+		command = ["ffmpeg", "-i", file_path, "-c", "copy"]
+
+		if start_time is not None:
+			command.extend(["-ss", str(start_time)])
+
+		if end_time is not None:
+			command.extend(["-to", str(end_time)])
+
+		command.append(output_path)
+
+		process = subprocess.Popen(
+			command,
+			stdout=subprocess.PIPE,
+			stderr=subprocess.PIPE,
+			universal_newlines=True,
+			preexec_fn=os.setsid,
+		)
+		stdout, stderr = process.communicate()
+		print(f"Stdout: {stdout}")
+		print(f"Stderr: {stderr}")
+
+	@staticmethod
+	def merge_videos(list_file_path: str, output_path: str) -> None:
 		command = [
 			"ffmpeg",
+			"-f",
+			"concat",
+			"-safe",
+			"0",
 			"-i",
-			file_path,
-			"-ss",
-			str(start_time),
-			"-to",
-			str(end_time),
+			list_file_path,
 			"-c",
 			"copy",
 			output_path,
 		]
-		subprocess.run(
-			command,
-			check=True,
-			capture_output=settings.DEBUG,
-		)
+		subprocess.run(command, check=True)

@@ -1,7 +1,7 @@
 # app/dao/base.py
-from typing import Any, Generic, Optional, Sequence, Type, TypeVar
+from typing import Any, Generic, Sequence, Type, TypeVar
 
-from sqlalchemy import delete, select, update
+from sqlalchemy import Uuid, delete, select, update
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -27,9 +27,9 @@ class BaseDAO(Generic[T]):
 			raise exception
 
 	@inject_session
-	async def get(self, unique_id: int, session: AsyncSession) -> Optional[T]:
+	async def get(self, unique_id: int | Uuid, session: AsyncSession) -> T | None:  # type: ignore
 		try:
-			statement = select(self.model).where(self.model.id == int(unique_id))  # type: ignore
+			statement = select(self.model).where(self.model.id == unique_id)  # type: ignore
 			result = await session.execute(statement)
 			return result.scalars().first()
 		except SQLAlchemyError as exception:
@@ -47,10 +47,10 @@ class BaseDAO(Generic[T]):
 	@inject_session
 	async def update(
 		self,
-		unique_id: int,
+		unique_id: int | Uuid,  # type: ignore
 		obj_in: dict[Any, Any],
 		session: AsyncSession,
-	) -> Optional[T]:
+	) -> T | None:
 		try:
 			statement = (
 				update(self.model)

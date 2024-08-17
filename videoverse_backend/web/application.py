@@ -6,7 +6,7 @@ from fastapi.responses import ORJSONResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware.cors import CORSMiddleware
 
-from videoverse_backend.core import DEFAULT_ROUTE_OPTIONS, CommonResponseSchema, StatusEnum, configure_logging
+from videoverse_backend.core import DEFAULT_ROUTE_OPTIONS, CommonResponseSchema, StatusEnum
 from videoverse_backend.middlewares.logging_middleware import LoggingMiddleware
 from videoverse_backend.web.api.router import api_router
 from videoverse_backend.web.lifespan import lifespan
@@ -56,7 +56,7 @@ def get_app() -> FastAPI:
 			},
 		)
 
-	configure_logging()
+	# configure_logging()
 	return app
 
 

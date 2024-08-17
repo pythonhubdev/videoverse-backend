@@ -1,7 +1,6 @@
 from enum import Enum
-from typing import Optional
 
-from videoverse_backend.db.models.base import BaseModel
+from pydantic import UUID4, BaseModel
 
 
 class TrimType(str, Enum):
@@ -10,7 +9,17 @@ class TrimType(str, Enum):
 
 
 class TrimSchema(BaseModel):
-	video_id: int
-	trim_time: Optional[float]
+	video_id: UUID4
+	trim_time: float | None
 	trim_type: TrimType
-	save_as_new: Optional[bool] = False
+	save_as_new: bool | None = False
+
+
+class MergeSchema(BaseModel):
+	video_ids: list[UUID4]
+	output_filename: str
+
+
+class ShareLinkSchema(BaseModel):
+	video_id: UUID4
+	expiry_hours: float = 24.0

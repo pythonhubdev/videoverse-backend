@@ -1,12 +1,10 @@
-import datetime
+import os
 import tempfile
-from os import PathLike
+from datetime import timedelta
 from typing import Any
 
 import firebase_admin
 from firebase_admin import credentials, storage
-
-from videoverse_backend.settings import settings
 
 
 class FirebaseService:
@@ -23,23 +21,29 @@ class FirebaseService:
 	def upload_file(self, file_name: str, file_path: Any) -> None:
 		blob = self.bucket.blob(file_name)
 		blob.upload_from_filename(file_path)
-		blob.generate_signed_url(
-			version="v4",
-			expiration=datetime.timedelta(minutes=settings.EXPIRATION_TIME),
-			method="GET",
-		)
 
-	def download_file(self, file_name: str, file_path: str) -> str:
-		blob = self.bucket.blob(file_path)
-		_, temp_input_path = tempfile.mkstemp(suffix=f".{file_name.split('.')[-1]}")
-		blob.download_to_filename(temp_input_path)
-		return temp_input_path
+	def download_file(self, file_name: str, file_path: str, destination_dir: str | None = None) -> str:
+		if destination_dir is not None:
+			os.makedirs(destination_dir, exist_ok=True)
 
-	def get_signed_url(self, file_name: str) -> str:
+			temp_input_path = os.path.join(destination_dir, file_name)
+
+			blob = self.bucket.blob(file_path)
+			blob.download_to_filename(temp_input_path)
+
+			return temp_input_path
+		else:
+			blob = self.bucket.blob(file_path)
+			_, temp_input_path = tempfile.mkstemp(suffix=f".{file_name.split('.')[-1]}")
+			blob.download_to_filename(temp_input_path)
+
+			return temp_input_path
+
+	def get_signed_url(self, file_name: str, expiration: timedelta) -> str:
 		blob = self.bucket.blob(file_name)
 		return blob.generate_signed_url(
 			version="v4",
-			expiration=datetime.timedelta(minutes=settings.EXPIRATION_TIME),
+			expiration=expiration,
 			method="GET",
 		)
 
