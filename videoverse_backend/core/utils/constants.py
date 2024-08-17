@@ -16,10 +16,17 @@ DEFAULT_ROUTE_OPTIONS: RouteOptions = {
 }
 
 SKIP_URLS = [
+	"/",
 	"/api/health",
 	"/api/openapi.json",
 	"/api/docs",
 	"/api/redoc",
 	"/api/auth",
 	"/api/auth/login",
+	"/static/docs/swagger-ui-bundle.js",
+	"/static/docs/swagger-ui.css",
+]
+
+TOKENS = [
+	"a3f8b00a7f21d0d8f9f6f3d52cfe1a90f7d36d8e8a3e4c5b1d1d5f3d9c9e3e1f",
 ]
