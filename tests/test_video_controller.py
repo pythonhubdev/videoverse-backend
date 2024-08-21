@@ -93,9 +93,9 @@ async def test_trim_video_success(video_controller):
 		args, _ = mock_trim.call_args
 		assert args[0] == mock_input_path
 		assert abs(args[1] - 10.0) < 1e-6
-		assert args[2] == 60  # end time
-		assert args[3].startswith("/var/folders/")
-
+		assert args[2] == 60
+		valid_path_prefixes = ["/var/folders/", "/tmp/"]
+		assert any(args[3].startswith(prefix) for prefix in valid_path_prefixes)
 		mock_trim.assert_called_once()
 
 
@@ -277,6 +277,3 @@ async def test_share_video_firebase_error(video_controller):
 	assert res.get("status") == StatusEnum.ERROR.value
 	assert response.status_code == 500
 	assert "Error generating shareable link" in res.get("message")
-
-
-# Add more test cases as needed
